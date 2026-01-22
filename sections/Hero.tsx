@@ -11,7 +11,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0 p-2 md:p-5">
           <div className="relative w-full h-full rounded-2xl overflow-hidden">
             <Image
-              src="/Moonfall.gif"
+              src="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/Moonfall.gif"
               alt="Background"
               fill
               className="object-cover"
