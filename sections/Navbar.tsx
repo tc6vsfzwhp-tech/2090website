@@ -81,7 +81,7 @@ export default function Navbar() {
           <Link href="/" className="relative flex items-center">
             <Image
               src="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/whiteLogo.png"
-              alt="Twenty Ninety Creative"
+              alt="logo"
               width={150}
               height={50}
               className="h-8 md:h-12 lg:h-15 w-auto"
