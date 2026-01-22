@@ -105,7 +105,7 @@ export default function FeaturedGame() {
           >
             <video
               className="w-full h-full object-cover"
-              src="/switch/demo.mp4"
+              src="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/demo.mp4"
               autoPlay
               muted
               loop
