@@ -1,0 +1,15 @@
+node_modules
+.next
+dist
+build
+out
+coverage
+.env
+.env.local
+.DS_Store
+*.log
+
+# Large media (do not commit)
+public/*.mp4
+public/**/*.mp4
+public/*.gif
