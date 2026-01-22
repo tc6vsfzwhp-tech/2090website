@@ -16,7 +16,7 @@ export default function Footer() {
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
     if (footerRef.current) {
       observer.observe(footerRef.current);
@@ -72,7 +72,7 @@ export default function Footer() {
           {/* Social Icons */}
           <div className="flex gap-8 mt-8 md:mt-0">
             <a
-              href="https://twitter.com"
+              href="https://x.com/416_dc"
               target="_blank"
               rel="noopener"
               aria-label="Twitter"
@@ -86,7 +86,7 @@ export default function Footer() {
               />
             </a>
             <a
-              href="https://instagram.com"
+              href="https://instagram.com/twentyninetycreative/"
               target="_blank"
               rel="noopener"
               aria-label="Instagram"
@@ -100,7 +100,7 @@ export default function Footer() {
               />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/company/twenty-ninety-creative"
               target="_blank"
               rel="noopener"
               aria-label="LinkedIn"
@@ -128,7 +128,7 @@ export default function Footer() {
               />
             </a>
             <a
-              href="mailto:contact@twentyninety.com"
+              href="mailto:info@twentyninetycreative.com"
               aria-label="Email"
               className="hover:opacity-70 transition"
             >
