@@ -80,7 +80,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="#home" className="relative flex items-center">
             <Image
-              src="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/whiteLogo%20jpg.jpg"
+              src="/whiteLogo.png"
               alt="logo"
               width={150}
               height={50}
