@@ -78,12 +78,9 @@ export default function Navbar() {
       <nav className="fixed top-0 left-0 right-0 z-[100] mt-4 transition-all duration-300">
         <div className="max-w-[1400px] mx-auto px-6 py-4 flex items-center justify-between">
           {/* Logo */}
-          <Link
-            href="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/whiteLogo.png"
-            className="relative flex items-center"
-          >
+          <Link href="#home" className="relative flex items-center">
             <Image
-              src="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/whiteLogo.png"
+              src="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/whiteLogo%20jpg.jpg"
               alt="logo"
               width={150}
               height={50}
