@@ -126,7 +126,7 @@ export default function Game() {
               className="flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full transition-all duration-300 group"
             >
               <Image
-                src="/Steam.svg"
+                src="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/steam.svg"
                 alt="Steam"
                 width={24}
                 height={24}
