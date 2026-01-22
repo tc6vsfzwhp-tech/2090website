@@ -29,7 +29,7 @@ const Doodle = ({
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
     const dist = Math.sqrt(
-      Math.pow(mousePos.x - centerX, 2) + Math.pow(mousePos.y - centerY, 2)
+      Math.pow(mousePos.x - centerX, 2) + Math.pow(mousePos.y - centerY, 2),
     );
     if (dist < 150) {
       const angle = Math.atan2(mousePos.y - centerY, mousePos.x - centerX);
@@ -153,7 +153,7 @@ const ClusterEye = ({
     // Calculate distance from cursor
     const dist = Math.sqrt(
       Math.pow(mousePos.x - eyeCenterX, 2) +
-        Math.pow(mousePos.y - eyeCenterY, 2)
+        Math.pow(mousePos.y - eyeCenterY, 2),
     );
 
     // Spread away from cursor when nearby
@@ -628,7 +628,7 @@ const Particle = ({
 
   useEffect(() => {
     const dist = Math.sqrt(
-      Math.pow(mousePos.x - basePos.x, 2) + Math.pow(mousePos.y - basePos.y, 2)
+      Math.pow(mousePos.x - basePos.x, 2) + Math.pow(mousePos.y - basePos.y, 2),
     );
     if (dist < 200) {
       const angle = Math.atan2(mousePos.y - basePos.y, mousePos.x - basePos.x);
@@ -1142,7 +1142,7 @@ export default function How() {
             <div className="absolute inset-0">
               <video
                 ref={videoRef}
-                src="/HowWeBuildGames/sub-section3/moonfall.mp4"
+                src="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/moonfall.mp4"
                 className="w-full h-full object-cover"
                 autoPlay
                 loop
