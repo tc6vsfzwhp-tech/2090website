@@ -343,10 +343,10 @@ export default function Navbar() {
                 <p className="text-sm text-gray-400 text-center md:text-left">
                   Our Email{" "}
                   <a
-                    href="mailto:ralharbi@me.com"
+                    href="mailto:info@twentyninetycreative.com"
                     className="text-gray-600 hover:underline"
                   >
-                    ralharbi@me.com
+                    info@twentyninetycreative.com
                   </a>
                 </p>
                 <button
