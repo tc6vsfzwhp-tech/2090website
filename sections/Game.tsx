@@ -2,55 +2,87 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 export default function Game() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <section className="min-h-screen bg-white ">
       <div className="bg-[#0B0F14] rounded-t-[3rem] md:rounded-t-[2rem] min-h-screen px-6 md:px-16 py-10 md:py-24 relative overflow-hidden">
-        {/* Right Tentacle - Jiggly animation */}
-        <motion.div
-          className="absolute right-0 -top-[8%] md:-top-[2%] w-24 md:w-40 lg:w-64 h-[300px] md:h-[400px] lg:h-[500px] pointer-events-none origin-top"
-          animate={{
-            skewX: [0, 2, -2, 1, -1, 0],
-            skewY: [0, 1, -1, 0.5, -0.5, 0],
-            scaleX: [1, 1.02, 0.98, 1.01, 0.99, 1],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <Image
-            src="/rightTen.svg"
-            alt=""
-            fill
-            className="object-contain scale-y-[-1]"
-          />
-        </motion.div>
+        {/* Right Tentacle - Static on mobile, animated on desktop */}
+        {isMobile ? (
+          <div className="absolute right-0 -top-[8%] w-24 h-[300px] pointer-events-none">
+            <Image
+              src="/rightTen.svg"
+              alt=""
+              fill
+              className="object-contain scale-y-[-1]"
+            />
+          </div>
+        ) : (
+          <motion.div
+            className="absolute right-0 -top-[2%] w-40 lg:w-64 h-[400px] lg:h-[500px] pointer-events-none origin-top"
+            animate={{
+              skewX: [0, 2, -2, 1, -1, 0],
+              skewY: [0, 1, -1, 0.5, -0.5, 0],
+              scaleX: [1, 1.02, 0.98, 1.01, 0.99, 1],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <Image
+              src="/rightTen.svg"
+              alt=""
+              fill
+              className="object-contain scale-y-[-1]"
+            />
+          </motion.div>
+        )}
 
-        {/* Left Tentacle - Jiggly animation */}
-        <motion.div
-          className="absolute left-0 -top-[20%] md:-top-[12%] w-24 md:w-40 lg:w-64 h-[500px] md:h-[650px] lg:h-[800px] pointer-events-none origin-top"
-          animate={{
-            skewX: [0, -2, 2, -1, 1, 0],
-            skewY: [0, -1, 1, -0.5, 0.5, 0],
-            scaleX: [1, 0.98, 1.02, 0.99, 1.01, 1],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 0.5,
-          }}
-        >
-          <Image
-            src="/leftTen.svg"
-            alt=""
-            fill
-            className="object-contain scale-y"
-          />
-        </motion.div>
+        {/* Left Tentacle - Static on mobile, animated on desktop */}
+        {isMobile ? (
+          <div className="absolute left-0 -top-[20%] w-24 h-[500px] pointer-events-none">
+            <Image
+              src="/leftTen.svg"
+              alt=""
+              fill
+              className="object-contain scale-y"
+            />
+          </div>
+        ) : (
+          <motion.div
+            className="absolute left-0 -top-[12%] w-40 lg:w-64 h-[650px] lg:h-[800px] pointer-events-none origin-top"
+            animate={{
+              skewX: [0, -2, 2, -1, 1, 0],
+              skewY: [0, -1, 1, -0.5, 0.5, 0],
+              scaleX: [1, 0.98, 1.02, 0.99, 1.01, 1],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 0.5,
+            }}
+          >
+            <Image
+              src="/leftTen.svg"
+              alt=""
+              fill
+              className="object-contain scale-y"
+            />
+          </motion.div>
+        )}
 
         <div className="max-w-6xl mx-auto relative z-10">
           {/* Header - Small text on top */}

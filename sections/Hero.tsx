@@ -1,22 +1,54 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+import { useEffect, useRef } from "react";
 
 export default function Home() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Handle video autoplay for mobile
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+
+    const playVideo = async () => {
+      try {
+        await video.play();
+      } catch (error) {
+        const playOnInteraction = () => {
+          video.play().catch(() => {});
+          document.removeEventListener("touchstart", playOnInteraction);
+          document.removeEventListener("click", playOnInteraction);
+        };
+        document.addEventListener("touchstart", playOnInteraction, { once: true });
+        document.addEventListener("click", playOnInteraction, { once: true });
+      }
+    };
+
+    playVideo();
+  }, []);
+
   return (
     <main className="bg-white text-gray-900">
       <section className="relative min-h-screen flex items-center px-6 bg-white overflow-hidden">
-        {/* GIF Container with rounded edges */}
+        {/* Video Container with rounded edges - replaces heavy GIF */}
         <div className="absolute inset-0 z-0 p-2 md:p-5">
           <div className="relative w-full h-full rounded-2xl overflow-hidden">
-            <Image
-              src="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/Moonfall.gif"
-              alt="Background"
-              fill
-              className="object-cover"
-              priority
-              unoptimized
+            <video
+              ref={videoRef}
+              src="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/Moonfall2.mp4"
+              className="w-full h-full object-cover"
+              autoPlay
+              loop
+              muted
+              playsInline
+              // @ts-ignore
+              webkit-playsinline="true"
+              preload="auto"
+              disablePictureInPicture
+              disableRemotePlayback
             />
           </div>
         </div>

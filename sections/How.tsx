@@ -1115,7 +1115,7 @@ export default function How() {
     if (activeSubsection === 2) {
       // Force muted state for autoplay on mobile
       video.muted = true;
-      
+
       const playVideo = async () => {
         try {
           await video.play();
@@ -1126,11 +1126,13 @@ export default function How() {
             document.removeEventListener("touchstart", playOnInteraction);
             document.removeEventListener("click", playOnInteraction);
           };
-          document.addEventListener("touchstart", playOnInteraction, { once: true });
+          document.addEventListener("touchstart", playOnInteraction, {
+            once: true,
+          });
           document.addEventListener("click", playOnInteraction, { once: true });
         }
       };
-      
+
       playVideo();
     } else {
       video.pause();

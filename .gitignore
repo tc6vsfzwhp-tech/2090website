@@ -13,3 +13,4 @@ coverage
 public/*.mp4
 public/**/*.mp4
 public/*.gif
+.vercel

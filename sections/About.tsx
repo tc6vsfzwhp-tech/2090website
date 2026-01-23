@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 export default function About() {
   const logos = [
     "/logos/1.jpg",
@@ -41,10 +43,12 @@ export default function About() {
             {/* CEO */}
             <div className="group flex flex-col items-center">
               <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-44 md:h-44 lg:w-52 lg:h-52 mb-2 md:mb-4 overflow-hidden rounded-xl md:rounded-2xl bg-gray-100">
-                <img
+                <Image
                   src="/About/CEO.png"
                   alt="CEO"
-                  className="w-full h-full object-cover grayscale transition-all duration-500 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, (max-width: 1024px) 176px, 208px"
+                  className="object-cover grayscale transition-all duration-500 group-hover:scale-105"
                 />
               </div>
               <h3 className="text-sm sm:text-base md:text-xl font-light text-black/90 mb-0.5 md:mb-1">
@@ -58,10 +62,12 @@ export default function About() {
             {/* CTO */}
             <div className="group flex flex-col items-center">
               <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-44 md:h-44 lg:w-52 lg:h-52 mb-2 md:mb-4 overflow-hidden rounded-xl md:rounded-2xl bg-gray-100">
-                <img
+                <Image
                   src="/About/CTO.png"
                   alt="CTO"
-                  className="w-full h-full object-cover grayscale transition-all duration-500 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, (max-width: 1024px) 176px, 208px"
+                  className="object-cover grayscale transition-all duration-500 group-hover:scale-105"
                 />
               </div>
               <h3 className="text-sm sm:text-base md:text-xl font-light text-black/90 mb-0.5 md:mb-1">
@@ -75,10 +81,12 @@ export default function About() {
             {/* COO */}
             <div className="group flex flex-col items-center">
               <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-44 md:h-44 lg:w-52 lg:h-52 mb-2 md:mb-4 overflow-hidden rounded-xl md:rounded-2xl bg-gray-100">
-                <img
+                <Image
                   src="/About/COO.png"
                   alt="COO"
-                  className="w-full h-full object-cover grayscale transition-all duration-500 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, (max-width: 1024px) 176px, 208px"
+                  className="object-cover grayscale transition-all duration-500 group-hover:scale-105"
                 />
               </div>
               <h3 className="text-sm sm:text-base md:text-xl font-light text-black/90 mb-0.5 md:mb-1">
@@ -105,12 +113,15 @@ export default function About() {
             {logos.map((logo, index) => (
               <div
                 key={index}
-                className="flex-shrink-0 w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 mx-3 sm:mx-5 md:mx-6 flex items-center justify-center"
+                className="flex-shrink-0 w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 mx-3 sm:mx-5 md:mx-6 flex items-center justify-center relative"
               >
-                <img
+                <Image
                   src={logo}
                   alt={`Partner logo ${index + 1}`}
-                  className="max-w-full max-h-full object-contain"
+                  fill
+                  sizes="(max-width: 640px) 80px, (max-width: 768px) 112px, 128px"
+                  className="object-contain"
+                  loading="lazy"
                 />
               </div>
             ))}
@@ -118,12 +129,15 @@ export default function About() {
             {logos.map((logo, index) => (
               <div
                 key={`duplicate-${index}`}
-                className="flex-shrink-0 w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 mx-3 sm:mx-5 md:mx-6 flex items-center justify-center"
+                className="flex-shrink-0 w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 mx-3 sm:mx-5 md:mx-6 flex items-center justify-center relative"
               >
-                <img
+                <Image
                   src={logo}
                   alt={`Partner logo ${index + 1}`}
-                  className="max-w-full max-h-full object-contain"
+                  fill
+                  sizes="(max-width: 640px) 80px, (max-width: 768px) 112px, 128px"
+                  className="object-contain"
+                  loading="lazy"
                 />
               </div>
             ))}
