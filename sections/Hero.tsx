@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 export default function Home() {
   return (
@@ -10,13 +9,12 @@ export default function Home() {
         {/* GIF Container with rounded edges */}
         <div className="absolute inset-0 z-0 p-2 md:p-5">
           <div className="relative w-full h-full rounded-2xl overflow-hidden">
-            <Image
+            {/* Using native img for better GIF support on mobile */}
+            <img
               src="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/Moonfall.gif"
               alt="Background"
-              fill
-              className="object-cover"
-              priority
-              unoptimized
+              className="absolute inset-0 w-full h-full object-cover"
+              loading="eager"
             />
           </div>
         </div>
