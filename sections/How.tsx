@@ -1151,6 +1151,22 @@ export default function How() {
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
 
+    // For larger screens (>1920px), extend the distribution area
+    // This ensures eyes and doodles cover the full width on ultra-wide monitors
+    const isLargeScreen = screenWidth > 1920;
+    const widthMultiplier = isLargeScreen ? 1.2 : 1;
+    const heightMultiplier = isLargeScreen ? 1.1 : 1;
+    const effectiveWidth = screenWidth * widthMultiplier;
+    const effectiveHeight = screenHeight * heightMultiplier;
+
+    // Offset to center the distribution
+    const widthOffset = isLargeScreen
+      ? -(screenWidth * (widthMultiplier - 1)) / 2
+      : 0;
+    const heightOffset = isLargeScreen
+      ? -(screenHeight * (heightMultiplier - 1)) / 2
+      : 0;
+
     // Generate cluster eyes
     const eyes: { position: { x: number; y: number }; size: number }[] = [];
     const centerX = screenWidth / 2;
@@ -1167,15 +1183,15 @@ export default function How() {
       );
     };
 
-    const numClusters = 15;
-    const eyesPerCluster = 10;
+    const numClusters = isLargeScreen ? 20 : 15;
+    const eyesPerCluster = isLargeScreen ? 12 : 10;
 
     for (let cluster = 0; cluster < numClusters; cluster++) {
       let clusterX, clusterY;
       let attempts = 0;
       do {
-        clusterX = Math.random() * screenWidth;
-        clusterY = Math.random() * screenHeight;
+        clusterX = Math.random() * effectiveWidth + widthOffset;
+        clusterY = Math.random() * effectiveHeight + heightOffset;
         attempts++;
       } while (isInExclusionZone(clusterX, clusterY) && attempts < 20);
 
@@ -1194,12 +1210,13 @@ export default function How() {
       }
     }
 
-    for (let i = 0; i < 60; i++) {
+    const additionalEyes = isLargeScreen ? 80 : 60;
+    for (let i = 0; i < additionalEyes; i++) {
       let x, y;
       let attempts = 0;
       do {
-        x = Math.random() * screenWidth;
-        y = Math.random() * screenHeight;
+        x = Math.random() * effectiveWidth + widthOffset;
+        y = Math.random() * effectiveHeight + heightOffset;
         attempts++;
       } while (isInExclusionZone(x, y) && attempts < 20);
 
@@ -1254,12 +1271,13 @@ export default function How() {
       );
     };
 
-    for (let i = 0; i < 40; i++) {
+    const numDoodles = isLargeScreen ? 55 : 40;
+    for (let i = 0; i < numDoodles; i++) {
       let x, y;
       let attempts = 0;
       do {
-        x = Math.random() * screenWidth;
-        y = Math.random() * screenHeight;
+        x = Math.random() * effectiveWidth + widthOffset;
+        y = Math.random() * effectiveHeight + heightOffset;
         attempts++;
       } while (isInDoodleExclusionZone(x, y) && attempts < 20);
 
