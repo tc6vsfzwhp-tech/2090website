@@ -606,17 +606,67 @@ const StaticDoodle = ({
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        <path d="M14 20 L14 24 M12 22 L16 22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="44" cy="20" r="2" fill="none" stroke="currentColor" strokeWidth="1" />
-        <circle cx="48" cy="24" r="2" fill="none" stroke="currentColor" strokeWidth="1" />
+        <path
+          d="M14 20 L14 24 M12 22 L16 22"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+        <circle
+          cx="44"
+          cy="20"
+          r="2"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+        />
+        <circle
+          cx="48"
+          cy="24"
+          r="2"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+        />
       </svg>
     ),
     pc: (
       <svg viewBox="0 0 50 50" className="w-full h-full">
-        <rect x="8" y="5" width="34" height="26" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <rect x="11" y="8" width="28" height="18" fill="none" stroke="currentColor" strokeWidth="1" />
-        <path d="M25 31 L25 37 M18 37 L32 37" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        <rect x="12" y="41" width="26" height="6" rx="1" fill="none" stroke="currentColor" strokeWidth="1" />
+        <rect
+          x="8"
+          y="5"
+          width="34"
+          height="26"
+          rx="2"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+        <rect
+          x="11"
+          y="8"
+          width="28"
+          height="18"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+        />
+        <path
+          d="M25 31 L25 37 M18 37 L32 37"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+        <rect
+          x="12"
+          y="41"
+          width="26"
+          height="6"
+          rx="1"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+        />
       </svg>
     ),
   };
@@ -651,7 +701,16 @@ const mobileDoodlePositions: {
   x: string;
   y: string;
   size: number;
-  type: "pencil" | "eraser" | "arrow" | "loop" | "checkmark" | "cross" | "scribble" | "controller" | "pc";
+  type:
+    | "pencil"
+    | "eraser"
+    | "arrow"
+    | "loop"
+    | "checkmark"
+    | "cross"
+    | "scribble"
+    | "controller"
+    | "pc";
 }[] = [
   { x: "5%", y: "10%", size: 30, type: "pencil" },
   { x: "80%", y: "8%", size: 35, type: "controller" },
@@ -1050,10 +1109,31 @@ export default function How() {
 
   // Play video when in subsection 3
   useEffect(() => {
-    if (activeSubsection === 2 && videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    } else if (videoRef.current) {
-      videoRef.current.pause();
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (activeSubsection === 2) {
+      // Force muted state for autoplay on mobile
+      video.muted = true;
+      
+      const playVideo = async () => {
+        try {
+          await video.play();
+        } catch (error) {
+          // If autoplay fails, try to play on first user interaction
+          const playOnInteraction = () => {
+            video.play().catch(() => {});
+            document.removeEventListener("touchstart", playOnInteraction);
+            document.removeEventListener("click", playOnInteraction);
+          };
+          document.addEventListener("touchstart", playOnInteraction, { once: true });
+          document.addEventListener("click", playOnInteraction, { once: true });
+        }
+      };
+      
+      playVideo();
+    } else {
+      video.pause();
     }
   }, [activeSubsection]);
 
@@ -1441,7 +1521,11 @@ export default function How() {
                 loop
                 muted
                 playsInline
+                // @ts-ignore - webkit-playsinline for older iOS
+                webkit-playsinline="true"
                 preload="auto"
+                disablePictureInPicture
+                disableRemotePlayback
               />
             </div>
 
