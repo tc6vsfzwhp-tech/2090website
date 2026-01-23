@@ -121,7 +121,7 @@ export default function FeaturedGame() {
 
       {/* Sticky Console - Scrolls normally first, then sticks to bottom */}
       <div className="sticky bottom-0 flex justify-center z-50 pointer-events-none">
-        <div className="relative w-[90vw] md:w-[85vw] lg:w-[1000px] min-[1920px]:w-[70vw] min-[2560px]:w-[60vw]">
+        <div className="relative w-[90vw] md:w-[85vw] lg:w-[1000px] min-[1920px]:w-[85vw] min-[2560px]:w-[80vw]">
           {/* Video masked to screen area */}
           <div
             className="absolute z-30 overflow-hidden rounded-[2px] md:rounded-sm"
