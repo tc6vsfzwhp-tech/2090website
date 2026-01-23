@@ -6,15 +6,16 @@ export default function Home() {
   return (
     <main className="bg-white text-gray-900">
       <section className="relative min-h-screen flex items-center px-6 bg-white overflow-hidden">
-        {/* GIF Container with rounded edges */}
+        {/* Video Container with rounded edges */}
         <div className="absolute inset-0 z-0 p-2 md:p-5">
           <div className="relative w-full h-full rounded-2xl overflow-hidden">
-            {/* Using native img for better GIF support on mobile */}
-            <img
-              src="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/Moonfall.gif"
-              alt="Background"
+            <video
+              src="https://res.cloudinary.com/dyofbqvew/video/upload/v1769174248/Moonfall_j43q0y.mp4"
               className="absolute inset-0 w-full h-full object-cover"
-              loading="eager"
+              autoPlay
+              loop
+              muted
+              playsInline
             />
           </div>
         </div>
