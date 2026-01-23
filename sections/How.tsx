@@ -487,6 +487,184 @@ const EditingDoodle = ({
   );
 };
 
+// Static doodle component for mobile - no animation
+const StaticDoodle = ({
+  position,
+  type,
+  size,
+  isVisible,
+  index,
+}: {
+  position: { x: string; y: string };
+  type:
+    | "pencil"
+    | "eraser"
+    | "arrow"
+    | "loop"
+    | "checkmark"
+    | "cross"
+    | "scribble"
+    | "controller"
+    | "pc";
+  size: number;
+  isVisible: boolean;
+  index: number;
+}) => {
+  const shapes: Record<string, ReactNode> = {
+    pencil: (
+      <svg viewBox="0 0 40 40" className="w-full h-full">
+        <path
+          d="M8 32 L28 12 L32 16 L12 36 L6 38 L8 32 M28 12 L30 10 L34 14 L32 16"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    eraser: (
+      <svg viewBox="0 0 40 40" className="w-full h-full">
+        <rect
+          x="10"
+          y="15"
+          width="20"
+          height="12"
+          rx="2"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+          transform="rotate(-15 20 21)"
+        />
+      </svg>
+    ),
+    arrow: (
+      <svg viewBox="0 0 50 30" className="w-full h-full">
+        <path
+          d="M5 15 Q15 5 25 15 Q35 25 40 15 M35 10 L40 15 L35 20"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    loop: (
+      <svg viewBox="0 0 40 40" className="w-full h-full">
+        <path
+          d="M20 8 A12 12 0 1 1 8 20 M8 15 L8 22 L15 22"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    checkmark: (
+      <svg viewBox="0 0 40 40" className="w-full h-full">
+        <path
+          d="M10 20 L17 27 L30 12"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    cross: (
+      <svg viewBox="0 0 40 40" className="w-full h-full">
+        <path
+          d="M12 12 L28 28 M28 12 L12 28"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+          strokeLinecap="round"
+        />
+      </svg>
+    ),
+    scribble: (
+      <svg viewBox="0 0 60 30" className="w-full h-full">
+        <path
+          d="M5 15 Q10 8 15 15 Q20 22 25 15 Q30 8 35 15 Q40 22 45 15 Q50 8 55 15"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+          strokeLinecap="round"
+        />
+      </svg>
+    ),
+    controller: (
+      <svg viewBox="0 0 60 40" className="w-full h-full">
+        <path
+          d="M15 12 Q5 12 5 22 Q5 32 15 32 L20 32 Q25 32 28 28 L32 28 Q35 32 40 32 L45 32 Q55 32 55 22 Q55 12 45 12 Z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path d="M14 20 L14 24 M12 22 L16 22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <circle cx="44" cy="20" r="2" fill="none" stroke="currentColor" strokeWidth="1" />
+        <circle cx="48" cy="24" r="2" fill="none" stroke="currentColor" strokeWidth="1" />
+      </svg>
+    ),
+    pc: (
+      <svg viewBox="0 0 50 50" className="w-full h-full">
+        <rect x="8" y="5" width="34" height="26" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
+        <rect x="11" y="8" width="28" height="18" fill="none" stroke="currentColor" strokeWidth="1" />
+        <path d="M25 31 L25 37 M18 37 L32 37" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <rect x="12" y="41" width="26" height="6" rx="1" fill="none" stroke="currentColor" strokeWidth="1" />
+      </svg>
+    ),
+  };
+
+  return (
+    <motion.div
+      className="absolute text-black/50"
+      style={{
+        left: position.x,
+        top: position.y,
+        width: size,
+        height: size,
+        zIndex: 1,
+      }}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{
+        opacity: isVisible ? 0.6 : 0,
+        scale: isVisible ? 1 : 0,
+      }}
+      transition={{
+        duration: 0.3,
+        delay: index * 0.05,
+      }}
+    >
+      {shapes[type]}
+    </motion.div>
+  );
+};
+
+// Fixed doodle positions for mobile (percentage-based)
+const mobileDoodlePositions: {
+  x: string;
+  y: string;
+  size: number;
+  type: "pencil" | "eraser" | "arrow" | "loop" | "checkmark" | "cross" | "scribble" | "controller" | "pc";
+}[] = [
+  { x: "5%", y: "10%", size: 30, type: "pencil" },
+  { x: "80%", y: "8%", size: 35, type: "controller" },
+  { x: "8%", y: "30%", size: 28, type: "loop" },
+  { x: "85%", y: "25%", size: 32, type: "checkmark" },
+  { x: "3%", y: "55%", size: 30, type: "arrow" },
+  { x: "88%", y: "50%", size: 28, type: "eraser" },
+  { x: "6%", y: "75%", size: 35, type: "pc" },
+  { x: "82%", y: "72%", size: 30, type: "scribble" },
+  { x: "15%", y: "88%", size: 26, type: "cross" },
+  { x: "75%", y: "90%", size: 28, type: "loop" },
+];
+
 // Main Curious Eye component (larger, in corner)
 const CuriousEye = ({
   mousePos,
@@ -1152,17 +1330,31 @@ export default function How() {
             transition={{ duration: 0.7 }}
             style={{ pointerEvents: activeSubsection === 1 ? "auto" : "none" }}
           >
-            {/* Editing/Iterating Doodles */}
-            {editingDoodles.map((doodle, i) => (
-              <EditingDoodle
-                key={i}
-                position={doodle.position}
-                type={doodle.type}
-                size={doodle.size}
-                isVisible={activeSubsection === 1}
-                index={i}
-              />
-            ))}
+            {/* Static doodles for mobile - fixed positions, no animation */}
+            {isMobile &&
+              mobileDoodlePositions.map((doodle, i) => (
+                <StaticDoodle
+                  key={`mobile-doodle-${i}`}
+                  position={{ x: doodle.x, y: doodle.y }}
+                  type={doodle.type}
+                  size={doodle.size}
+                  isVisible={activeSubsection === 1}
+                  index={i}
+                />
+              ))}
+
+            {/* Animated doodles for desktop */}
+            {!isMobile &&
+              editingDoodles.map((doodle, i) => (
+                <EditingDoodle
+                  key={i}
+                  position={doodle.position}
+                  type={doodle.type}
+                  size={doodle.size}
+                  isVisible={activeSubsection === 1}
+                  index={i}
+                />
+              ))}
 
             {/* Content */}
             <div className="text-center px-6 max-w-3xl z-10">
