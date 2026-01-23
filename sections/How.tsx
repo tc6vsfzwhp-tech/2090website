@@ -1513,12 +1513,19 @@ export default function How() {
             transition={{ duration: 0.7 }}
             style={{ pointerEvents: activeSubsection === 2 ? "auto" : "none" }}
           >
-            {/* Video background - full opacity */}
+            {/* Background - Image on mobile, Video on desktop */}
             <div className="absolute inset-0">
+              {/* Mobile: Static image */}
+              <img
+                src="/HowWeBuildGames/sub-section3/moonfall-bg.jpg"
+                alt="Moonfall background"
+                className="md:hidden w-full h-full object-cover"
+              />
+              {/* Desktop: Video */}
               <video
                 ref={videoRef}
                 src="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/moonfall.mp4"
-                className="w-full h-full object-cover"
+                className="hidden md:block w-full h-full object-cover"
                 autoPlay
                 loop
                 muted
