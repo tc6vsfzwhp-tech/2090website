@@ -16,6 +16,11 @@ export default function Home() {
               loop
               muted
               playsInline
+              // @ts-ignore - webkit-playsinline for older iOS
+              webkit-playsinline="true"
+              preload="auto"
+              disablePictureInPicture
+              disableRemotePlayback
             />
           </div>
         </div>
