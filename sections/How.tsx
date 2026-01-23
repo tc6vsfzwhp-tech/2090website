@@ -1524,7 +1524,7 @@ export default function How() {
               {/* Desktop: Video */}
               <video
                 ref={videoRef}
-                src="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/moonfall.mp4"
+                src="https://res.cloudinary.com/dyofbqvew/video/upload/v1769171259/moonfall_clpusl.mp4"
                 className="hidden md:block w-full h-full object-cover"
                 autoPlay
                 loop
