@@ -19,6 +19,28 @@ export const metadata: Metadata = {
     icon: "/icon.ico",
     shortcut: "/icon.ico",
   },
+  openGraph: {
+    title: "Twenty Ninety Creative",
+    description:
+      "Twenty Ninety Creative - A saudi based Game Development Studio",
+    images: [
+      {
+        url: "/blackLogo.png",
+        width: 1200,
+        height: 630,
+        alt: "Twenty Ninety Creative",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Twenty Ninety Creative",
+    description:
+      "Twenty Ninety Creative - A saudi based Game Development Studio",
+    images: ["/blackLogo.png"],
+  },
 };
 
 export default function RootLayout({
