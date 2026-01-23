@@ -1,11 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function FeaturedGame() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -14,6 +15,34 @@ export default function FeaturedGame() {
 
   // Parallax effect for background images
   const bgY = useTransform(scrollYProgress, [0, 1], [0, -50]);
+
+  // Handle video autoplay for mobile
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Force muted state for autoplay on mobile
+    video.muted = true;
+
+    const playVideo = async () => {
+      try {
+        await video.play();
+      } catch (error) {
+        // If autoplay fails, try to play on first user interaction
+        const playOnInteraction = () => {
+          video.play().catch(() => {});
+          document.removeEventListener("touchstart", playOnInteraction);
+          document.removeEventListener("click", playOnInteraction);
+        };
+        document.addEventListener("touchstart", playOnInteraction, {
+          once: true,
+        });
+        document.addEventListener("click", playOnInteraction, { once: true });
+      }
+    };
+
+    playVideo();
+  }, []);
 
   // 12 background images for 5 columns × 3 rows (middle column empty)
   const bgImages = [
@@ -104,13 +133,18 @@ export default function FeaturedGame() {
             }}
           >
             <video
+              ref={videoRef}
               className="w-full h-full object-cover"
               src="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/demo.mp4"
               autoPlay
               muted
               loop
               playsInline
-              preload="metadata"
+              // @ts-ignore - webkit-playsinline for older iOS
+              webkit-playsinline="true"
+              preload="auto"
+              disablePictureInPicture
+              disableRemotePlayback
             />
           </div>
 
