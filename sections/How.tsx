@@ -651,10 +651,74 @@ const Particle = ({
   );
 };
 
+// Static eye component for mobile - no movement, fixed positions
+const StaticEye = ({
+  position,
+  size,
+  isVisible,
+  index,
+}: {
+  position: { x: string; y: string };
+  size: number;
+  isVisible: boolean;
+  index: number;
+}) => {
+  return (
+    <motion.div
+      className="absolute"
+      style={{
+        left: position.x,
+        top: position.y,
+        width: size,
+        height: size,
+        zIndex: 1,
+      }}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{
+        opacity: isVisible ? 1 : 0,
+        scale: isVisible ? 1 : 0,
+      }}
+      transition={{
+        duration: 0.3,
+        delay: index * 0.05,
+      }}
+    >
+      <img
+        src="/HowWeBuildGames/sub-section1/Eye.svg"
+        alt="Eye"
+        className="w-full h-full object-contain"
+        style={{
+          filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.15))",
+        }}
+      />
+    </motion.div>
+  );
+};
+
+// Fixed eye positions for mobile (percentage-based for responsiveness)
+const mobileEyePositions = [
+  { x: "5%", y: "8%", size: 28 },
+  { x: "75%", y: "5%", size: 32 },
+  { x: "88%", y: "15%", size: 24 },
+  { x: "8%", y: "25%", size: 22 },
+  { x: "80%", y: "30%", size: 30 },
+  { x: "3%", y: "45%", size: 26 },
+  { x: "85%", y: "50%", size: 28 },
+  { x: "10%", y: "65%", size: 24 },
+  { x: "78%", y: "68%", size: 32 },
+  { x: "5%", y: "82%", size: 30 },
+  { x: "82%", y: "85%", size: 26 },
+  { x: "20%", y: "12%", size: 20 },
+  { x: "60%", y: "88%", size: 22 },
+  { x: "35%", y: "5%", size: 18 },
+  { x: "92%", y: "40%", size: 20 },
+];
+
 export default function How() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSubsection, setActiveSubsection] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const [assetsVisible, setAssetsVisible] = useState<boolean[]>([
     false,
     false,
@@ -689,6 +753,16 @@ export default function How() {
   >([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Detect mobile screen
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Use requestAnimationFrame to continuously check position (more reliable than scroll events)
   useEffect(() => {
@@ -779,15 +853,22 @@ export default function How() {
     };
   }, []);
 
-  // Track mouse position
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    setMousePos({ x: e.clientX, y: e.clientY });
-  }, []);
+  // Track mouse position (only on desktop)
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!isMobile) {
+        setMousePos({ x: e.clientX, y: e.clientY });
+      }
+    },
+    [isMobile],
+  );
 
   useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [handleMouseMove]);
+    if (!isMobile) {
+      window.addEventListener("mousemove", handleMouseMove);
+      return () => window.removeEventListener("mousemove", handleMouseMove);
+    }
+  }, [handleMouseMove, isMobile]);
 
   // Play video when in subsection 3
   useEffect(() => {
@@ -799,7 +880,14 @@ export default function How() {
   }, [activeSubsection]);
 
   // Generate random positions on client only to avoid hydration mismatch
+  // Skip on mobile - we use fixed positions instead
   useEffect(() => {
+    // Skip generating random eyes on mobile
+    if (isMobile) {
+      setClusterEyes([]);
+      return;
+    }
+
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
 
@@ -924,7 +1012,7 @@ export default function How() {
     }
 
     setEditingDoodles(doodles);
-  }, []);
+  }, [isMobile]);
 
   const doodles = [
     {
@@ -983,17 +1071,30 @@ export default function How() {
             transition={{ duration: 0.7 }}
             style={{ pointerEvents: activeSubsection === 0 ? "auto" : "none" }}
           >
-            {/* Random clusters of Eyes */}
-            {clusterEyes.map((eye, i) => (
-              <ClusterEye
-                key={i}
-                mousePos={mousePos}
-                isVisible={activeSubsection === 0}
-                position={eye.position}
-                size={eye.size}
-                index={i}
-              />
-            ))}
+            {/* Static eyes for mobile - fixed positions, no movement */}
+            {isMobile &&
+              mobileEyePositions.map((eye, i) => (
+                <StaticEye
+                  key={`mobile-eye-${i}`}
+                  position={{ x: eye.x, y: eye.y }}
+                  size={eye.size}
+                  isVisible={activeSubsection === 0}
+                  index={i}
+                />
+              ))}
+
+            {/* Random clusters of Eyes for desktop */}
+            {!isMobile &&
+              clusterEyes.map((eye, i) => (
+                <ClusterEye
+                  key={i}
+                  mousePos={mousePos}
+                  isVisible={activeSubsection === 0}
+                  position={eye.position}
+                  size={eye.size}
+                  index={i}
+                />
+              ))}
 
             {/* Content */}
             <div className="text-center px-6 max-w-3xl z-20">
