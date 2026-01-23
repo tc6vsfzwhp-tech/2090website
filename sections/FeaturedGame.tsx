@@ -135,7 +135,7 @@ export default function FeaturedGame() {
             <video
               ref={videoRef}
               className="w-full h-full object-cover"
-              src="https://vaaomblbmlkknefc.public.blob.vercel-storage.com/demo.mp4"
+              src="https://res.cloudinary.com/dyofbqvew/video/upload/v1769171844/demo_oivo5z.mp4"
               autoPlay
               muted
               loop
